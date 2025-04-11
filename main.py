@@ -11,7 +11,7 @@ ld()
 intents  = discord.Intents.default()
 intents.message_content = True
 bot = cls.Bot(command_prefix='!', intents=intents)
-guild_id = discord.Object(id=int(os.getenv('DISCORD_GUILD')))
+guild_id = discord.Object(id= int(os.getenv('DISCORD_GUILD')))
 
 ## ___________Commands___________ ##
 
