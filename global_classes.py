@@ -3,13 +3,13 @@ from discord.ext import commands
 from discord import app_commands
 import discord.ui
 import game_info as g_info
-
+import os
 
 class Bot(commands.Bot):
     async def on_ready(self):
         print(f'Logged in as {self.user}')
         try:
-            guild_id = discord.Object(id=1275055092743012445)
+            guild_id = discord.Object(id=int(os.getenv('DISCORD_GUILD')))
             synch = await self.tree.sync(guild=guild_id)
             print(synch)
         except Exception as e:
