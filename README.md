@@ -1,2 +1,3 @@
 # RPG Bot for Discord
-## With Python and discord.py
+*(With Python and discord.py)*
+
