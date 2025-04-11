@@ -1,14 +1,14 @@
 game_classes = {
     "Warrior": {
         "name": "Warrior",
-        "Description": "A strong melee fighter",
-        "Stats": {"Attack": 10, "Defense": 12},
-        "icon": "⚔"
+        "description": "A strong melee fighter",
+        "stats": {"Attack": 10, "Defense": 12},
+        "icon": "⚔️"
     },
     "Mage": {
         "name": "Mage",
-        "Description": "A powerful spellcaster",
-        "Stats": {"Attack": 18, "Defense": 8},
+        "description": "A powerful spellcaster",
+        "stats": {"Attack": 18, "Defense": 8},
         "icon": "🔥"
     },
     "Rogue": {
