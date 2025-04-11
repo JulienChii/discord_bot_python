@@ -21,7 +21,7 @@ guild_id = discord.Object(id= int(os.getenv('DISCORD_GUILD')))
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message("Pong!", ephemeral=True,)
 
-#Character Creation Command
+# This command will be used to create a character for the user
 @bot.tree.command(name="create_character", description="Create your Character", guild=guild_id)
 async def ping(interaction: discord.Interaction):
     ui = cls.UI_Create_Character()
