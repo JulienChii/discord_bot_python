@@ -27,7 +27,6 @@ class UI_Create_Character(discord.ui.View):
             embed.add_field(name=f"{g_info.game_classes[i]["name"]} | {g_info.game_classes[i]["icon"]}" , value=" ", inline=False)
             embed.add_field(name=f"Description" , value=f"{g_info.game_classes[i]["description"]}", inline=False)
             embed.add_field(name=f"------------------------------" , value=" ", inline=False)
-        embed.set_footer(text="Use the buttons below to select your class.")
         self.embed = embed
 
         for i in g_info.game_classes:
