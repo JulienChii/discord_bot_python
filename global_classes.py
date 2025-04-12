@@ -16,8 +16,9 @@ class Bot(commands.Bot):
             print(f'Error syncing commands: {e}')
 
 class UI_Create_Character(discord.ui.View):
-    def __init__(self):
+    def __init__(self, message_id):
         super().__init__()
+        print(message_id)
         embed = discord.Embed(
             color=discord.Color.blue(),
             title="Create your Character",
@@ -30,13 +31,14 @@ class UI_Create_Character(discord.ui.View):
         self.embed = embed
 
         for i in g_info.game_classes:
-            self.add_item(UI_Button(label=g_info.game_classes[i]["name"], style=discord.ButtonStyle.primary, custom_id=i, character=g_info.game_classes[i]))
+            self.add_item(UI_Class_Button(label=g_info.game_classes[i]["name"], style=discord.ButtonStyle.primary, custom_id=i, character=g_info.game_classes[i]))
 
-class UI_Button(discord.ui.Button):
+class UI_Class_Button(discord.ui.Button):
     def __init__(self, label: str, style: discord.ButtonStyle, custom_id: str,character):
         super().__init__(label=label, style=style, custom_id=custom_id,emoji=character["icon"])
 
     async def callback(self, interaction: discord.Interaction):
         await interaction.response.send_message(f"{interaction.user.name} clicked the button with ID: {self.custom_id}", ephemeral=True)
+        await interact.message.delete()
 
        
