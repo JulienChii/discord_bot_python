@@ -6,6 +6,7 @@ import os
 import logging
 from dotenv import load_dotenv as ld
 import global_classes as cls
+import data_manager as dm
 
 ld()
 
@@ -26,7 +27,7 @@ async def ping(interaction: discord.Interaction):
 @bot.tree.command(name="create_character", description="Create your Character", guild=guild_id)
 async def ping(interaction: discord.Interaction):
     ui = cls.UI_Create_Character(message_id=interaction.message)
-    await interaction.response.send_message("", ephemeral=True,view=ui,embed=ui.embed)
+    await interaction.response.send_message("result", ephemeral=True,view=ui,embed=ui.embed)
 
 #Character Info Command
 @bot.tree.command(name="me", description="See your Character Stats", guild=guild_id)

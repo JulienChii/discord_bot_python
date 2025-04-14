@@ -10,7 +10,7 @@ def get_player_info(player_name):
     """
     Get player info from the database.
     """
-    cur.execute("SELECT * FROM players WHERE playername=?", (player_name))
+    cur.execute("SELECT * FROM playerinfo WHERE playername=?", (player_name))
     return cur.fetchone()
 
 

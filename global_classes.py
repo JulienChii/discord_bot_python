@@ -32,14 +32,15 @@ class UI_Create_Character(discord.ui.View):
         self.embed = embed
 
         for i in g_info.game_classes:
-            self.add_item(UI_Class_Button(label=g_info.game_classes[i]["name"], style=discord.ButtonStyle.primary, custom_id=i["name"], character=g_info.game_classes[i]))
+            self.add_item(UI_Class_Button(label=g_info.game_classes[i]["name"], style=discord.ButtonStyle.primary, custom_id=i, character=g_info.game_classes[i]))
 
 class UI_Class_Button(discord.ui.Button):
-    def __init__(self, label: str, style: discord.ButtonStyle, custom_id: str,character):
+    def __init__(self, label: str, style: discord.ButtonStyle, custom_id: str,character:dict,):
         super().__init__(label=label, style=style, custom_id=custom_id,emoji=character["icon"])
 
-    async def callback(self, interaction: discord.Interaction, character):
-        await interaction.response.send_message(f"{interaction.user.name} clicked the button with ID: {self.custom_id}", ephemeral=True)
-        dm.insert_character_data(interaction.user.name, character_data=character)
+    async def callback(self, interaction: discord.Interaction):
+        data = g_info.game_classes[self.label]
+        result = dm.insert_character_data(interaction.user.name, character_data=data)
+        await interaction.response.send_message(result, ephemeral=True)
 
        
