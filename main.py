@@ -20,19 +20,20 @@ guild_id = discord.Object(id= int(os.getenv('DISCORD_GUILD')))
 #Ping Command
 @bot.tree.command(name="ping", description="Ping the bot", guild=guild_id)
 async def ping(interaction: discord.Interaction):
-    await interaction.response.send_message("Pong!", ephemeral=True,)
-    await interaction.message.delete(delay=5)
+    await interaction.response.send_message(f"Pong! Your name is {interaction.user.name}", ephemeral=True)
 
 # This command will be used to create a character for the user
 @bot.tree.command(name="create_character", description="Create your Character", guild=guild_id)
 async def ping(interaction: discord.Interaction):
     ui = cls.UI_Create_Character(message_id=interaction.message)
-    await interaction.response.send_message("result", ephemeral=True,view=ui,embed=ui.embed)
+    await interaction.response.send_message("", ephemeral=True,view=ui,embed=ui.embed)
 
 #Character Info Command
 @bot.tree.command(name="me", description="See your Character Stats", guild=guild_id)
 async def ping(interaction: discord.Interaction, public:bool = False):
-    await interaction.response.send_message("This is a Test", ephemeral=not public)
+    print(interaction.user.name)
+    char_info = cls.UI_Playerinfo(message_id=interaction)
+    await interaction.response.send_message("", ephemeral=not public,view=char_info,embed=char_info.embed)
 
 
 

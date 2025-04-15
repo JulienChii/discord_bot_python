@@ -43,4 +43,28 @@ class UI_Class_Button(discord.ui.Button):
         result = dm.insert_character_data(interaction.user.name, character_data=data)
         await interaction.response.send_message(result, ephemeral=True)
 
-       
+
+
+class UI_Playerinfo(discord.ui.View):
+    def __init__(self, message_id):
+        super().__init__()
+        print(message_id)
+        embed = discord.Embed(
+            color=discord.Color.pink(),
+            title="Profile Information",
+            description=""
+        )
+        info = dm.get_player_info(message_id.user.name)
+        print(info)
+        if info is int:
+            embed.description = "No character found!"
+            self.embed = embed
+            return
+        elif len(info) == 0:
+            embed.description = "No character found!"
+        else:
+            embed.add_field(name="**Name**", value=info[0][1], inline=False)
+            embed.add_field(name="**Class**", value=info[0][2], inline=False)
+            embed.add_field(name="**Attack**", value=info[0][3], inline=False)
+            embed.add_field(name="**Defense**", value=info[0][4], inline=False)
+        self.embed = embed
