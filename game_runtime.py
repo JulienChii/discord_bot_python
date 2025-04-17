@@ -1,8 +1,8 @@
 import time
+import main
+
+
 cur_adventures = [] # Playername , timestamp, lenght
-
-
-
 
 def set_adventure(playername, adventure, required_time):
     if len(cur_adventures) == 0:
@@ -16,7 +16,7 @@ def set_adventure(playername, adventure, required_time):
             if i[0] == playername:
                 return False # Adventure already running
             else:
-                cur_adventures.append([playername, time.time(), adventure])
+                cur_adventures.append([playername, time.time(), adventure,required_time])
                 return True # Adventure started
 
 def get_adventure(playername):
@@ -37,7 +37,9 @@ def update_adventure_list():
         for i in cur_adventures:
             remaining_time  = time.time() - i[3]
             if round(remaining_time) >= 0:
+                main.send_message(i[0],"Adventure finished!")
                 print("Adventure finished for player:", i[0])
+                
                 cur_adventures.remove(i)
                 continue
             else:

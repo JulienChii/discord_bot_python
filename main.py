@@ -51,7 +51,7 @@ async def on_ready():
 
 async def update_adventure_list():
     while True:
-        g_runtime.update_adventure_list()
+        result = g_runtime.update_adventure_list()
         await asyncio.sleep(1) # Update every second
 
 bot.run(os.getenv('DISCORD_TOKEN'))
