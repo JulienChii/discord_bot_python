@@ -5,6 +5,7 @@ import discord.ui
 import game_info as g_info
 import os
 import data_manager as dm
+import game_runtime as g_runtime
 
 class Bot(commands.Bot):
     async def on_ready(self):
@@ -43,22 +44,32 @@ class UI_Class_Button(discord.ui.Button):
         result = dm.insert_character_data(interaction.user.name, character_data=data)
         await interaction.response.send_message(result, ephemeral=True)
 
+class UI_Adventure_Button(discord.ui.Button):
+    adventure_id = ""
+    req_time = 0
+    def __init__(self, label: str, style: discord.ButtonStyle, custom_id: str, required_time:int = 10):
+        self.adventure_id = custom_id
+        self.req_time = required_time
+        super().__init__(label=label, style=style, custom_id=custom_id)
 
+    async def callback(self, interaction: discord.Interaction):
+        result = g_runtime.set_adventure(interaction.user.name,adventure=self.adventure_id,required_time=self.req_time)
+        if result:
+            await interaction.response.send_message(f"Adventure started for player: {interaction.user.name} Adventure ID: {self.adventure_id}", ephemeral=True)
+        else:
+            await interaction.response.send_message(f"Adventure already running for player: {interaction.user.name} Adventure ID: {self.adventure_id}", ephemeral=True)
 
 class UI_Playerinfo(discord.ui.View):
     def __init__(self, message_id):
         super().__init__()
-        print(message_id)
         embed = discord.Embed(
             color=discord.Color.pink(),
             title="Profile Information",
             description=""
         )
         info = dm.get_player_info(message_id.user.name)
-        print(info)
         if info is int:
             embed.description = "No character found!"
-            self.embed = embed
             return
         elif len(info) == 0:
             embed.description = "No character found!"
@@ -67,4 +78,25 @@ class UI_Playerinfo(discord.ui.View):
             embed.add_field(name="**Class**", value=info[0][2], inline=False)
             embed.add_field(name="**Attack**", value=info[0][3], inline=False)
             embed.add_field(name="**Defense**", value=info[0][4], inline=False)
+        self.embed = embed
+
+class UI_Select_Adventure(discord.ui.View):
+    def __init__(self, message_id):
+        super().__init__()
+        embed = discord.Embed(
+            color=discord.Color.red(),
+            title="Starting an Adventure",
+            description=""
+        )
+        self.add_item(UI_Adventure_Button(label="***Adventure 1***", style=discord.ButtonStyle.primary, custom_id="adventure 1", required_time=5))
+        self.add_item(UI_Adventure_Button(label="***Adventure 2***", style=discord.ButtonStyle.primary, custom_id="adventure 2",required_time=30))
+        self.add_item(UI_Adventure_Button(label="***Adventure 3***", style=discord.ButtonStyle.primary, custom_id="adventure 3", required_time=10))
+        
+        embed.add_field(name="**Select a Adventure**", value="")
+        embed.add_field(name="**Adventure 1**", value=" ", inline=False)
+        embed.add_field(name="Description1",value="", inline=False)
+        embed.add_field(name="**Adventure 2**", value=" ", inline=False)
+        embed.add_field(name="Description2",value="", inline=False)
+        embed.add_field(name="**Adventure 3**", value=" ", inline=False)
+        embed.add_field(name="Description3",value="", inline=False)
         self.embed = embed
